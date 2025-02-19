@@ -12,9 +12,9 @@ exports.register = async (req, res) => {
         // return res.status(400).json({message: "user with macbook is nt allowed access"})
         // }
         const result = await cloudinary.uploader.upload(file.path);
-
+        
         fs.unlinkSync(file.path)
-
+        
 
         const emailExit = await userModel.findOne({ email: email.toLowerCase() })
 
@@ -135,7 +135,7 @@ exports.deleteUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { fullName } = req.body;
+        const {fullName} = req.body;
         const user = await userModel.findById(id)
 
         if (!user) {
@@ -146,15 +146,15 @@ exports.updateUser = async (req, res) => {
 
         const data = {
             fullName,
-            profilePic: user.profilePic
-        }
+            profilePic : user.profilePic
+            }
 
         if (req.file) {
             // / Upload the new profile picture to Cloudinary
             const result = await cloudinary.uploader.upload(req.file.path);
 
             if (user.profilePic.publicId) {
-                // Delete the old profile picture from Cloudinary
+            // Delete the old profile picture from Cloudinary
                 await cloudinary.uploader.destroy(user.profilePic.publicId);
                 // Remove the uploaded file from the local file system
             }
@@ -163,16 +163,16 @@ exports.updateUser = async (req, res) => {
                 imageUrl: result.secure_url,
                 publicId: result.public_id
             }
-
             fs.unlinkSync(req.file.path)
-        }
+            
+    }
 
-        const updatedUser = await userModel.findByIdAndUpdate(id, data, { new: true })
+    const updatedUser = await userModel.findByIdAndUpdate(id, data, {new:true})
 
-        res.status(200).json({
-            message: "User updated successfully",
-            data: updatedUser
-        })
+    res.status(200).json({
+        message: "User updated successfully",
+        data: updatedUser
+    })
 
     } catch (error) {
         console.error(error);
@@ -183,4 +183,5 @@ exports.updateUser = async (req, res) => {
 }
 
 
-
+  
+  
