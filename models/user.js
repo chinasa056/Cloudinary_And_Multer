@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
         require: true
     },
 
+    gender: {
+        type: String,
+        enum: ["Male", "Female"]
+    },
+
     profilePic: {
         imageUrl: {
             type: String,
@@ -33,6 +38,11 @@ const userSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Posts",
     }],
+
+    isVerified: {
+        type: Boolean,
+        default: true
+    }
 
 })
 

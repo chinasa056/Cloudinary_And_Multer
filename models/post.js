@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const postSchema =  new mongoose.Schema({
-    content :{
+const postSchema = new mongoose.Schema({
+    content: {
         type: String,
     },
 
     images: [{
-        imageUrl: {type: String},
-        imagePublicId: {type: String}
+        imageUrl: { type: String },
+        imagePublicId: { type: String }
     }],
 
     userId: {
@@ -26,7 +26,7 @@ const postSchema =  new mongoose.Schema({
         ref: "Comments"
     }]
 
-}, {timestamps: true})
+}, { timestamps: true })
 
 const postModel = mongoose.model("Post", postSchema);
 
