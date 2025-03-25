@@ -1,3 +1,4 @@
+const { ref } = require("joi");
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
@@ -24,6 +25,15 @@ const postSchema = new mongoose.Schema({
     commentIds: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Comments"
+    }],
+
+    reactions: [{
+        userName: String,
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: "Users"},
+        reaction: {
+            type: String,
+            enum: ["Like", "Love", "Wow", "Haha", "Care", "Angry"]
+        }
     }]
 
 }, { timestamps: true })

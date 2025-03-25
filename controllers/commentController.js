@@ -47,4 +47,22 @@ exports.createComment = async (req, res) => {
         })
         
     }
+};
+
+exports.getAllComments = async (req, res) => {
+    try {
+        const comments = await commentModel.find().populate("replies");
+
+        res.status(200).json({
+            message: "All replies retrieved successfully",
+            data: comments
+        })
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        })
+    }
 }
