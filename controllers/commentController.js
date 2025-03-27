@@ -4,13 +4,10 @@ const commentModel = require("../models/comment");
 
 exports.createComment = async (req, res) => {
     try {
-        // extract the user"s id from the request.user payload
         const {userId} = req.user;
-        // extract the post id from the params
         const {id: postId} = req.params;
-        // extract the comment from the req.body
         const {comment} = req.body
-        // check if the post is still existing
+
         const post = await postModel.findById(postId)
         if(!post) {
             return res.status(404).json({
@@ -36,13 +33,13 @@ exports.createComment = async (req, res) => {
         await post.save()
 
         res.status(201).json({
-            message: "Comment Submitted Successfully",
+            message: "Comment posted Successfully",
             data: newComment
         })
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Internal Server Error",
+            message: "Error Posting Comment",
             error: error.message
         })
         
